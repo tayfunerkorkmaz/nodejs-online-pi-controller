@@ -1,0 +1,18 @@
+{
+  "name": "client-pi-gpio-controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "node-aplay": "^1.0.3",
+    "node-mp3-player": "^1.0.3",
+    "onoff": "^3.2.2",
+    "socket.io-client": "^2.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

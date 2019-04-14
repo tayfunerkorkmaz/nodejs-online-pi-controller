@@ -1,0 +1,269 @@
+<html>
+
+<head>
+  <title>App</title>
+  <style>
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: #2196F3;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    .player {
+      margin: 50px 0;
+    }
+
+    .btn {
+      background-color: rgb(183, 208, 218);
+
+    }
+  </style>
+  <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="./js/bootstrap.js">
+</head>
+
+<table style="width:60%; ">
+  <tr style="width:100%; height:100%;">
+
+    <body>
+      <div class="card border-info mb-3" style="max-width:100%; ">
+        <div class="card-header">RaspBerry Kontrol Uygulaması</div>
+        <td style="width:50%;">
+          <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+            <div class="card-header">Motorlar</div>
+            <div class="card-body">
+
+
+              <div>
+                <label id="cek_label1" for="cek" class="switch">Motor-1</label>
+                <label class="switch">
+                  <input type="checkbox" id="cek" onclick="">
+                  <span class="slider round"></span>
+                </label>
+              </div><br>
+
+              <div>
+                <label id="cek_label2" for="cek1" class="switch">Motor-2</label>
+                <label class="switch">
+                  <input type="checkbox" id="cek1" onclick="">
+                  <span class="slider round"></span>
+                </label>
+              </div><br>
+
+
+              <div>
+                <label for="cek2" class="switch">Motor-3</label>
+                <label class="switch">
+                  <input type="checkbox" id="cek2" onclick="">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <div>
+                <label id="cek_label" class="switch"></label>
+              </div>
+
+
+
+
+            </div>
+          </div>
+
+
+        </td>
+        <td style="width:100%; height:100%;">
+          <div class="card border-success mb-3" style="max-width: 18rem;">
+            <div class="card-header bg-transparent border-success">Müzik Oynat</div>
+            <div style="background-color:	#4AA02C;">
+              <button type="button" id="button_play" class="btn" onclick='buttonPlayPress()'>
+                &#9658;
+              </button>
+              <button type="button" id="button_pause" class="btn" onclick='buttonPlayPress()'>
+                &#10074;&#10074;
+              </button>
+
+              <button type="button" id="button_stop" class="btn" onclick='buttonStopPress()'>
+                &#9724;
+              </button>
+            </div>
+
+          </div>
+
+        </td>
+  </tr>
+
+  </div>
+</table>
+</body>
+
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="/js/socket.io.js"></script>
+<script>
+  var socket = io.connect();
+
+
+  $(document).ready(function () {
+
+
+    $("#cek").click(function () {
+      if ($("#cek").is(":checked")) {
+        socket.emit('motor', {
+          motor: 1,
+          message: true
+        });
+      } else {
+        socket.emit('motor', {
+          motor: 1,
+          message: false
+        });
+      }
+    });
+
+
+    $("#cek1").click(function () {
+      if ($("#cek1").is(":checked")) {
+        socket.emit('motor', {
+          motor: 2,
+          message: true
+        });
+      } else {
+        socket.emit('motor', {
+          motor: 2,
+          message: false
+        });
+      }
+    });
+
+    $("#cek2").click(function () {
+      if ($("#cek2").is(":checked")) {
+        socket.emit('motor', {
+          motor: 3,
+          message: true
+        });
+      } else {
+        socket.emit('motor', {
+          motor: 3,
+          message: false
+        });
+      }
+    });
+
+
+    $("#button_play").click(function () {
+      socket.emit('music', {
+        message: 'play'
+      });
+    });
+
+    $("#button_pause").click(function () {
+      socket.emit('music', {
+        message: 'pause'
+      });
+    });
+
+    $("#button_stop").click(function () {
+      socket.emit('music', {
+        message: 'stop'
+      });
+    });
+
+
+
+
+
+
+
+  });
+
+
+  //when we receive buttonUpdate, do this
+  socket.on('buttonUpdate', function (data) {
+
+    if (data.motor != null) {
+
+      document.getElementById("cek_label").innerHTML = 'Motor' + JSON.stringify(data.motor + "-" + data.message);
+
+
+
+    } else {
+      document.getElementById("cek_label").innerHTML = 'Müzik :' + JSON.stringify(data.message);
+
+    }
+  });
+</script>
+
+<script>
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
